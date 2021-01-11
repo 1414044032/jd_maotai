@@ -175,7 +175,10 @@ class Jd_Mask_Spider(object):
             'Host': 'marathon.jd.com',
         }
         resp = self.session.post(url=url, data=data, headers=headers)
-        return parse_json(resp.text)
+        if resp.text != 'null':
+            return parse_json(resp.text)
+        else:
+            return self._get_seckill_init_info()
 
     def _get_seckill_order_data(self):
         """生成提交抢购订单所需的请求体参数
